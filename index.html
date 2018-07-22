@@ -38,36 +38,43 @@
 
     <!--Custom script -->
     <script type="text/javascript">
-        $(document).ready(function(){
-          $("#fullpage").fullpage({
-            //fullpage options
-            licenseKey:"OPEN-SOURCE-GPLV3-LICENSE"
-          });  
-        });
-
-
-      //Display map on first screen
-      var mapSvg = d3.select("#yearmap");
-
-      var path = d3.geoPath();
-
-      //Based on example at https://bl.ocks.org/mbostock/4090848
-
-      d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
-        if (error) throw error;
-
-        mapSvg.append("g")
-            .attr("class", "states")
-            .selectAll("path")
-            .data(topojson.feature(us, us.objects.states).features)
-            .enter().append("path")
-            .attr("d", path);
-
-        mapSvg.append("path")
-            .attr("class", "state-borders")
-            .attr("d", path(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; })));
+      $(document).ready(function(){
+        $("#fullpage").fullpage({
+          //fullpage options
+          licenseKey:"OPEN-SOURCE-GPLV3-LICENSE"
+        });  
       });
-        
+
+
+      var homicidesState = {};
+      var statesMap = d3.map();
+
+      d3.queue()
+      .defer(d3.json, "https://d3js.org/us-10m.v1.json")
+      .defer(d3.tsv, "https://gist.github.com/mbostock/4090846#file-us-state-names-tsv", function(d) { statesMap.set(d.code, d.id)})
+      .defer(d3.csv, "count_by_year_and_state.csv", buildHomicides)
+      .await(ready);
+
+      function buildHomicides(error, homicideData) {
+        var array = d3.nest()
+          .key(h => h.state)
+          .key(h => h.year)
+          .entries(homicideData)
+          .map(function(d) {
+            var state = d.key
+            var years = d.values.map(function(sy) {
+                return {year: sy.key, count:sy.values[1].uid}
+            });
+          });
+
+        array.forEach(function(d) {
+          homicidesState[d.year] = d.count;
+        });
+      }
+
+      function ready(error, us) {
+
+      }
     </script>
   </body>
 </html>
