@@ -3,52 +3,38 @@
   <head>
     <meta charset="utf-8">
     <title>US Homicides</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.6.6/jquery.fullPage.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.6.6/jquery.fullPage.min.js"></script>
+
+    <!--Load jQuery and fullpage tags -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://rawgit.com/alvarotrigo/fullPage.js/master/jquery.fullPage.js"></script>
+
+    <!--Custom script -->
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $(#fullpage).fullpage();  
+      });
+    </script>
+
+    <!--We will overide some default styles here -->
+    <link rel="stylesheet" href='styles.css'>
+    <!-- Adding fullpage.css is essential-->
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/alvarotrigo/fullPage.js/master/jquery.fullPage.css" />
+
+    <script type="text/javascript">
+
+
+    </script>
   </head>
   <body>
-    <!-- page content -->
-    <div id="fullPage">
-      <section class="vertical-scrolling">
-          <h2>fullPage.js</h2>
-          <h3>This is the first section</h3>
-          <div class="scroll-icon">
-              <p>Jump into the last slide</p>
-              <a href="#fifthSection/1" class="icon-up-open-big"></a>
-          </div>
-      </section>
-      <section class="vertical-scrolling">
-          <!-- content here -->
-      </section>
-      <section class="vertical-scrolling">
-          <!-- content here -->
-      </section>
-      <section class="vertical-scrolling">
-          <!-- content here -->
-      </section>  
-      <section class="vertical-scrolling">
-          <!-- content here -->
-          <div class="horizontal-scrolling">
-            <h2>fullPage.js</h2>
-            <h3>This is the fifth section and it contains the first slide</h3>
-          </div>
-          <div class="horizontal-scrolling">
-            <h2>fullPage.js</h2>
-            <h3>This is the second slide</h3> 
-            <p class="end">Thank you!</p>
-          </div>
-      </section> 
+
+    <div id="fullpage">
+      <div class="section">
+        <p>Section 1</p>
+      </div>
+      <div class="section"></div>
+      <div class="section"></div>
+      <div class="section"></div>
     </div>
-
   </body>
-
-  <script type="text/javascript">
-    $('#fullpage').fullpage({
-      sectionSelector: '.vertical-scrolling',
-      slideSelector: '.horizontal-scrolling',
-      controlArrows: false
-      // more options here
-    });
-  </script>
 </html>
