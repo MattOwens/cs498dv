@@ -9,6 +9,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.1/fullpage.min.js"></script>
 
+    <!-- load d3 -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
 
 
     <!--We will overide some default styles here -->
@@ -20,16 +22,16 @@
 
     <div id="fullpage">
       <div class="section">
-        <p>Section 1</p>
+        <p>Homicides By State</p>
+        <svg id="yearmap" width="960", height="500"></svg>
       </div>
       <div class="section">
         <p>Section 2</p>
+        <svg id="circles" width="960", height="960"></svg>
       </div>
       <div class="section">
         <p>Section 3</p>
-      </div>
-      <div class="section">
-        <p>Section 4</p>
+        <svg id="explore" width="960", height="960"></svg>
       </div>
     </div>
 
@@ -40,6 +42,19 @@
             //fullpage options
             licenseKey:"OPEN-SOURCE-GPLV3-LICENSE"
           });  
+        });
+
+
+        //Display the map on the first screen
+        var mapProjection = d3.geo.albersUsa()
+          .translate([960 / 2, 500 / 2])
+          .scale([1000]);
+
+        var path = d3.geo.path()
+          .projection(mapProjection);
+
+        d3.json("us-states.json", function(json) {
+          Console.WriteLine("got to the loaded callback");
         });
     </script>
   </body>
