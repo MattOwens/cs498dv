@@ -61,7 +61,7 @@
         .await(ready);
 
         function buildHomicides(homicideData, error) {
-          var array = d3.nest()
+          /*var array = d3.nest()
             .key(h => h.state)
             .key(h => h.year)
             .entries(homicideData)
@@ -75,11 +75,17 @@
           array.forEach(function(d) {
             homicidesState[d.state] = d.years;
           });
+          */
+          var stateId = homicideData.stateId;
+          if(!stateId in homicideState) {
+            homicidesState[stateId] = {};
+          }
+          homicidesState[stateId][homicideData.year] = homicideData.count; 
         }
 
         function getColor(stateId) {
           if (stateId in homicidesState) {
-            var homicidesFor2008 = homicidesState[stateId].get(2008);
+            var homicidesFor2008 = homicidesState[stateId][2008];
             return "rgb(" + homicidesFor2008 + "," +  homicidesFor2008 * 2 + "," +  homicidesFor2008 / 2 + ")";
           }
           return "gray";
