@@ -84,7 +84,7 @@
         }
 
         function getColor(stateId) {
-          if (stateId in homicidesState) {
+          if (parseInt(stateId) in homicidesState) {
             var homicidesFor2008 = homicidesState[stateId][2008];
             return "rgb(" + homicidesFor2008 + "," +  homicidesFor2008 * 2 + "," +  homicidesFor2008 / 2 + ")";
           }
