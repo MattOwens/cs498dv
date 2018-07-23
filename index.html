@@ -82,7 +82,7 @@
         }
 
         function ready(error, us) {
-          mapsSvg.selectAll("path")
+          mapSvg.selectAll("path")
             .data(topojson.feature(us, us.objects.states).features)
             .enter().append("path")
               .attr("fill", function(d) { return getColor(statesMap.get(d.id)) })
