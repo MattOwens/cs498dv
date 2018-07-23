@@ -47,6 +47,8 @@
       });
 
       var color = d3.scaleThreshold();
+      var homicidesState = {};
+      var statesMap = d3.map();
 
       function buildColorRange(year) {
         var minCount = Number.MAX_SAFE_INTEGER;
@@ -70,8 +72,6 @@
       function buildMap() {
 
         var path = d3.geoPath();
-        var homicidesState = {};
-        var statesMap = d3.map();
         var mapSvg = d3.select("#yearmap");
 
         d3.queue()
