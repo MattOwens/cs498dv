@@ -93,6 +93,8 @@
         }
 
         function ready(error, us) {
+          if(error) throw error;
+          
           mapSvg.selectAll("path")
             .data(topojson.feature(us, us.objects.states).features)
             .enter().append("path")
