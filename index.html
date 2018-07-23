@@ -77,7 +77,7 @@
           });
           */
           var stateId = homicideData.stateId;
-          if(!stateId in homicidesState) {
+          if(!(stateId in homicidesState)) {
             homicidesState[stateId] = {};
           }
           homicidesState[stateId][homicideData.year] = homicideData.count; 
