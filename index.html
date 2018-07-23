@@ -43,51 +43,55 @@
           //fullpage options
           licenseKey:"OPEN-SOURCE-GPLV3-LICENSE"
         });  
+        buildMap();
       });
 
 
-      var path = d3.geoPath();
-      var homicidesState = {};
-      var statesMap = d3.map();
+      function buildMap() {
 
-      d3.queue()
-      .defer(d3.json, "https://d3js.org/us-10m.v1.json")
-      .defer(d3.tsv, "https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv", function(d) { statesMap.set(d.code, d.id)})
-      .defer(d3.csv, "count_by_year_and_state.csv", buildHomicides)
-      .await(ready);
+        var path = d3.geoPath();
+        var homicidesState = {};
+        var statesMap = d3.map();
 
-      function buildHomicides(error, homicideData) {
-        var array = d3.nest()
-          .key(h => h.state)
-          .key(h => h.year)
-          .entries(homicideData)
-          .map(function(d) {
-            var state = d.key
-            var years = d.values.map(function(sy) {
-                return {year: sy.key, count:sy.values[1].uid}
+        d3.queue()
+        .defer(d3.json, "https://d3js.org/us-10m.v1.json")
+        .defer(d3.tsv, "https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv", function(d) { statesMap.set(d.code, d.id)})
+        .defer(d3.csv, "count_by_year_and_state.csv", buildHomicides)
+        .await(ready);
+
+        function buildHomicides(error, homicideData) {
+          var array = d3.nest()
+            .key(h => h.state)
+            .key(h => h.year)
+            .entries(homicideData)
+            .map(function(d) {
+              var state = d.key
+              var years = d.values.map(function(sy) {
+                  return {year: sy.key, count:sy.values[1].uid}
+              });
             });
+
+          array.forEach(function(d) {
+            homicidesState[d.year] = d.count;
           });
+        }
 
-        array.forEach(function(d) {
-          homicidesState[d.year] = d.count;
-        });
-      }
+        function getColor(stateId) {
+          return rgb(255, 255, 127);
+        }
 
-      function getColor(stateId) {
-        return rgb(255, 255, 127);
-      }
-
-      function ready(error, us) {
-        var mapSvg = d3.select("#yearmap");
-        mapsSvg.selectAll("path")
-          .data(topojson.feature(us, us.objects.states).features)
-          .enter().append("path")
-            .attr("fill", function(d) { return getColor(statesMap.get(d.id)) })
+        function ready(error, us) {
+          var mapSvg = d3.select("#yearmap");
+          mapsSvg.selectAll("path")
+            .data(topojson.feature(us, us.objects.states).features)
+            .enter().append("path")
+              .attr("fill", function(d) { return getColor(statesMap.get(d.id)) })
+              .attr("d", path);
+          mapSvg.append("path")
+            .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+            .attr("class", "state-borders")
             .attr("d", path);
-        mapSvg.append("path")
-          .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
-          .attr("class", "state-borders")
-          .attr("d", path);
+        }
       }
     </script>
   </body>
