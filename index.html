@@ -76,7 +76,7 @@
             homicidesState[d.state] = d.years;
           });
           */
-          var stateId = homicideData.state;
+          var stateId = statesMap.get(homicideData.state);
           if(!(stateId in homicidesState)) {
             homicidesState[stateId] = {};
           }
