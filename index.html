@@ -60,6 +60,8 @@
         .defer(d3.csv, "count_by_year_and_state.csv", buildHomicides)
         .await(ready);
 
+        var color = d3.scaleThreshold();
+
         function buildHomicides(homicideData, error) {
           /*var array = d3.nest()
             .key(h => h.state)
@@ -83,11 +85,29 @@
           homicidesState[stateId][homicideData.year] = homicideData.count; 
         }
 
+        function buildColorRange(year) {
+          var minCount = Number.MAX_SAFE_INTEGER;
+          var maxCount = Number.MIN_SAFE_INTEGER;
+
+          for (var state in homicidesState) {
+            var years = homicidesState[state];
+            if(year in years) {
+              var count = years[year];
+              if(count > maxCount) maxCount = count;
+              if(count < minCount) minCount = count;
+            }
+          }
+
+          color = d3.scaleThreshold()
+            .domain(d3.range(minCount, maxCount))
+            .range(d3.schemeBlues[10]);
+        }
+
         function getColor(stateId) {
           var state = parseInt(stateId)
           if (state in homicidesState) {
             var homicidesFor2008 = homicidesState[state][2008];
-            return "rgb(" + homicidesFor2008 + "," +  homicidesFor2008 * 2 + "," +  homicidesFor2008 / 2 + ")";
+            return color(homicidesFor2008);//"rgb(" + homicidesFor2008 + "," +  homicidesFor2008 * 2 + "," +  homicidesFor2008 / 2 + ")";
           }
           return "gray";
 
@@ -95,6 +115,8 @@
 
         function ready(error, us) {
           if(error) throw error;
+
+          buildColorRange(2008);
 
           mapSvg.selectAll("path")
             .data(topojson.feature(us, us.objects.states).features)
