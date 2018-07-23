@@ -52,6 +52,7 @@
         var path = d3.geoPath();
         var homicidesState = {};
         var statesMap = d3.map();
+        var mapSvg = d3.select("#yearmap");
 
         d3.queue()
         .defer(d3.json, "https://d3js.org/us-10m.v1.json")
@@ -81,7 +82,6 @@
         }
 
         function ready(error, us) {
-          var mapSvg = d3.select("#yearmap");
           mapsSvg.selectAll("path")
             .data(topojson.feature(us, us.objects.states).features)
             .enter().append("path")
