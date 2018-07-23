@@ -78,8 +78,12 @@
         }
 
         function getColor(stateId) {
-          var homicidesFor2008 = homicidesState[stateId].get(2008);
-          return "rgb(" + homicidesFor2008 + "," +  homicidesFor2008 * 2 + "," +  homicidesFor2008 / 2 + ")";
+          if (stateId in homicidesState) {
+            var homicidesFor2008 = homicidesState[stateId].get(2008);
+            return "rgb(" + homicidesFor2008 + "," +  homicidesFor2008 * 2 + "," +  homicidesFor2008 / 2 + ")";
+          }
+          return "gray";
+
         }
 
         function ready(error, us) {
