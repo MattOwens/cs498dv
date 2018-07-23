@@ -60,7 +60,7 @@
         .defer(d3.csv, "count_by_year_and_state.csv", buildHomicides)
         .await(ready);
 
-        function buildHomicides(homicideData) {
+        function buildHomicides(homicideData, error) {
           var array = d3.nest()
             .key(h => h.state)
             .key(h => h.year)
@@ -86,7 +86,7 @@
 
         }
 
-        function ready(us) {
+        function ready(error, us) {
           mapSvg.selectAll("path")
             .data(topojson.feature(us, us.objects.states).features)
             .enter().append("path")
