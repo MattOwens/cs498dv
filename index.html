@@ -66,26 +66,27 @@
             .key(h => h.year)
             .entries(homicideData)
             .map(function(d) {
-              var state = d.key
+              var state = statesMap.get(d.key);
               var years = d.values.map(function(sy) {
                   return {year: sy.key, count:sy.values[1].uid}
               });
             });
 
           array.forEach(function(d) {
-            homicidesState[d.year] = d.count;
+            homicidesState[d.state] = d.years;
           });
         }
 
         function getColor(stateId) {
-          return "rgb(255, 255, 127)";
+          var homicidesFor2008 = homicidesState[stateId].get(2008);
+          return "rgb(" + homicidesFor2008 + "," +  homicidesFor2008 * 2 + "," +  homicidesFor2008 / 2 + ")";
         }
 
         function ready(error, us) {
           mapSvg.selectAll("path")
             .data(topojson.feature(us, us.objects.states).features)
             .enter().append("path")
-              .attr("fill", function(d) { return getColor(statesMap.get(d.id)) })
+              .attr("fill", function(d) { return getColor(d.id) })
               .attr("d", path);
           mapSvg.append("path")
             .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
