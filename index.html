@@ -68,7 +68,7 @@
             .map(function(d) {
               var state = statesMap.get(d.key);
               var years = d.values.map(function(sy) {
-                  return {year: sy.key, count:sy.values[1].uid}
+                  return {year: sy.key, count:sy.values[1].count}
               });
             });
 
