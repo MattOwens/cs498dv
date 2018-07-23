@@ -46,6 +46,26 @@
         buildMap();
       });
 
+      var color = d3.scaleThreshold();
+
+      function buildColorRange(year) {
+        var minCount = Number.MAX_SAFE_INTEGER;
+        var maxCount = Number.MIN_SAFE_INTEGER;
+
+        for (var state in homicidesState) {
+          var years = homicidesState[state];
+          if(year in years) {
+            var count = years[year];
+            if(count > maxCount) maxCount = count;
+            if(count < minCount) minCount = count;
+          }
+        }
+
+        color = d3.scaleThreshold()
+          .domain(d3.range(minCount, maxCount))
+          .range(d3.schemeBlues[10]);
+      }
+
 
       function buildMap() {
 
@@ -59,8 +79,6 @@
         .defer(d3.tsv, "https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv", function(d) { statesMap.set(d.code, d.id)})
         .defer(d3.csv, "count_by_year_and_state.csv", buildHomicides)
         .await(ready);
-
-        var color = d3.scaleThreshold();
 
         function buildHomicides(homicideData, error) {
           /*var array = d3.nest()
@@ -83,24 +101,6 @@
             homicidesState[stateId] = {};
           }
           homicidesState[stateId][homicideData.year] = homicideData.count; 
-        }
-
-        function buildColorRange(year) {
-          var minCount = Number.MAX_SAFE_INTEGER;
-          var maxCount = Number.MIN_SAFE_INTEGER;
-
-          for (var state in homicidesState) {
-            var years = homicidesState[state];
-            if(year in years) {
-              var count = years[year];
-              if(count > maxCount) maxCount = count;
-              if(count < minCount) minCount = count;
-            }
-          }
-
-          color = d3.scaleThreshold()
-            .domain(d3.range(minCount, maxCount))
-            .range(d3.schemeBlues[10]);
         }
 
         function getColor(stateId) {
