@@ -108,14 +108,14 @@
           homicidesState[stateId][homicideData.year] = homicideData.count; 
         }
 
-        function getColor(stateId) {
+        function getColor(stateId, year) {
           var state = parseInt(stateId)
           if (state in homicidesState) {
-            var homicidesFor2008 = homicidesState[state][2008];
-            return color(homicidesFor2008);//"rgb(" + homicidesFor2008 + "," +  homicidesFor2008 * 2 + "," +  homicidesFor2008 / 2 + ")";
+            if(year in homicidesState[state]) {
+              return color(homicidesState[state][year]);
+            }
           }
           return "gray";
-
         }
 
         function ready(error, us) {
@@ -126,7 +126,7 @@
           mapSvg.selectAll("path")
             .data(topojson.feature(us, us.objects.states).features)
             .enter().append("path")
-              .attr("fill", function(d) { return getColor(d.id) })
+              .attr("fill", function(d) { return getColor(d.id, 2008) })
               .attr("d", path);
           mapSvg.append("path")
             .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
