@@ -24,7 +24,8 @@
     <div id="fullpage">
       <div class="section">
         <p>Homicides By State</p>
-        <input type="range" min="2007" max="2017" id="yearSlider" oninput="drawMap(this.value)" onchange="drawMap(this.value)">
+        <input type="range" min="2007" max="2017" value="2007" id="yearSlider" oninput="drawMap(this.value)" onchange="drawMap(this.value)">
+        <p id="yearLabel"></p>
         <svg id="yearmap" width="960", height="600"></svg>
       </div>
       <div class="section">
@@ -90,6 +91,7 @@
       function drawMap(yearStr) {
         var year = parseInt(yearStr);
         console.log("Drawing map for year " + year);
+        $("#yearLabel").text("Year: " + year);
         buildColorRange(year);
 
         var join = mapSvg.selectAll("path").data(topojson.feature(us, us.objects.states).features);
