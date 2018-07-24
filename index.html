@@ -127,7 +127,7 @@
 
         var join = mapSvg.selectAll("path").data(topojson.feature(us, us.objects.states).features);
         join.enter().append("path").merge(join)
-          .attr("fill", function(d) { return getColor(d.id, year) })
+          .attr("fill", function(d) { return getColor(d.id, year, showCumulativeTotals) })
           .attr("d", path);
 
         mapSvg.append("path")
