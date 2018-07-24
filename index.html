@@ -44,7 +44,7 @@
           //fullpage options
           licenseKey:"OPEN-SOURCE-GPLV3-LICENSE"
         });  
-        buildMap();
+        loadData();
       });
 
       var color = d3.scaleThreshold();
@@ -52,6 +52,7 @@
       var statesMap = d3.map();
       var path = d3.geoPath();
       var mapSvg = d3.select("#yearmap");
+      var us = {};
 
       function buildColorRange(year) {
         var minCount = Number.MAX_SAFE_INTEGER;
@@ -86,24 +87,22 @@
         return "gray";
       }
 
-      function ready(error, us) {
-          if(error) throw error;
+      function drawMap() {
+        buildColorRange(2008);
 
-          buildColorRange(2008);
-
-          mapSvg.selectAll("path")
-            .data(topojson.feature(us, us.objects.states).features)
-            .enter().append("path")
-              .attr("fill", function(d) { return getColor(d.id, 2008) })
-              .attr("d", path);
-          mapSvg.append("path")
-            .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
-            .attr("class", "state-borders")
+        mapSvg.selectAll("path")
+          .data(topojson.feature(us, us.objects.states).features)
+          .enter().append("path")
+            .attr("fill", function(d) { return getColor(d.id, 2008) })
             .attr("d", path);
+        mapSvg.append("path")
+          .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+          .attr("class", "state-borders")
+          .attr("d", path);
         }
 
 
-      function buildMap() {
+      function loadData() {
 
         var mapSvg = d3.select("#yearmap");
 
@@ -111,7 +110,7 @@
         .defer(d3.json, "https://d3js.org/us-10m.v1.json")
         .defer(d3.tsv, "https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv", function(d) { statesMap.set(d.code, d.id)})
         .defer(d3.csv, "count_by_year_and_state.csv", buildHomicides)
-        .await(ready);
+        .await(usLoaded);
 
         function buildHomicides(homicideData, error) {
           var stateId = statesMap.get(homicideData.state);
@@ -119,6 +118,12 @@
             homicidesState[stateId] = {};
           }
           homicidesState[stateId][homicideData.year] = homicideData.count; 
+        }
+
+        function usLoaded(error, usLoad) {
+          if(error) throw error;
+          us = usLoad;
+          drawMap();
         }
       }
     </script>
