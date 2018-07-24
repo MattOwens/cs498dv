@@ -45,7 +45,7 @@
           //fullpage options
           licenseKey:"OPEN-SOURCE-GPLV3-LICENSE"
         });  
-        loadData($("#yearSlider").val());
+        loadData();
       });
 
       var color = d3.scaleThreshold();
@@ -132,7 +132,7 @@
         function usLoaded(error, usLoad) {
           if(error) throw error;
           us = usLoad;
-          drawMap();
+          drawMap($("#yearSlider").val());
         }
       }
     </script>
