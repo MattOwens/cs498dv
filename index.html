@@ -24,7 +24,7 @@
     <div id="fullpage">
       <div class="section">
         <p>Homicides By State</p>
-        <label><input name="showCumulativeCheckbox" type="checkbox"/>Show Cumulative Totals</label>
+        <label><input name="showCumulativeCheckbox" type="checkbox" onchange="drawMap()"/>Show Cumulative Totals</label>
         <input type="range" min="2007" max="2017" value="2007" id="yearSlider" oninput="drawMap()" onchange="drawMap()">
         <p id="yearLabel"></p>
         <svg id="yearmap" width="960", height="600"></svg>
@@ -93,8 +93,14 @@
         var year = parseInt($("#yearSlider").val());
         var showCumulativeTotals = $("#showCumulativeCheckbox").is(":checked");
 
-        console.log("Drawing map for year " + year);
-        $("#yearLabel").text("Year: " + year);
+        if(showCumulativeTotals) {
+          $("#yearLabel").text("Years: 2007-" + year);
+        }
+        else {
+          $("#yearLabel").text("Year: " + year);
+        }
+
+        console.log("Drawing map for year " + year +", cumulative: " + showCumulativeTotals);
         buildColorRange(year, showCumulativeTotals);
 
         var join = mapSvg.selectAll("path").data(topojson.feature(us, us.objects.states).features);
