@@ -62,16 +62,24 @@
 
         for (var state in homicidesState) {
           var years = homicidesState[state];
-          if(year in years) {
-            var count = parseInt(years[year]);
-            if(count > maxCount) {
-              maxCount = count;
-            }
 
-            if(count < minCount) {
-              minCount = count;
-            } 
+          var count = -1;
+          if(showCumulativeTotals) {
+            count = getCumulativeCountForState(state, year);
           }
+          else if(year in years) {
+            count = parseInt(years[year]);
+          }
+
+          if(count == -1) continue;
+
+          if(count > maxCount) {
+            maxCount = count;
+          }
+
+          if(count < minCount) {
+            minCount = count;
+          } 
         }
 
         color = d3.scaleThreshold()
@@ -79,10 +87,24 @@
           .range(d3.schemeBlues[5]);
       }
 
-      function getColor(stateId, year) {
+      function getCumulativeCountForState(state, endYear) {
+        var total = 0;
+        for (checkYear = 2007; checkYear <= endYear; checkYear++) {
+          if(checkYear in homicidesState[state])
+            total += homicidesState[state][checkYear];
+        }
+      }
+
+      function getColor(stateId, year, showCumulativeTotals) {
         var state = parseInt(stateId)
         if (state in homicidesState) {
-          if(year in homicidesState[state]) {
+
+          if(showCumulativeTotals) {
+            var total = getCumulativeCountForState(state, year);
+            if(total != 0)
+              return color(total);
+          }
+          else if(year in homicidesState[state]) {
             return color(homicidesState[state][year]);
           }
         }
