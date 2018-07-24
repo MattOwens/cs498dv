@@ -44,7 +44,7 @@
           //fullpage options
           licenseKey:"OPEN-SOURCE-GPLV3-LICENSE"
         });  
-        loadData();
+        loadData($("#yearSlider").value);
       });
 
       var color = d3.scaleThreshold();
@@ -92,11 +92,16 @@
         console.log("Drawing map for year " + year);
         buildColorRange(year);
 
-        mapSvg.selectAll("path")
+        var join = mapSvg.selectAll("path").data(topojson.feature(us, us.objects.states).features);
+        join.enter().append("path").merge(join)
+          .attr("fill", function(d) { return getColor(d.id, year) })
+          .attr("d", path);
+
+        /*mapSvg.selectAll("path")
           .data(topojson.feature(us, us.objects.states).features)
           .enter().append("path")
             .attr("fill", function(d) { return getColor(d.id, year) })
-            .attr("d", path);
+            .attr("d", path);*/
         mapSvg.append("path")
           .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
           .attr("class", "state-borders")
