@@ -24,7 +24,7 @@
     <div id="fullpage">
       <div class="section">
         <p>Homicides By State</p>
-        <input type="range" min="2007" max="2017" id="yearSlider">
+        <input type="range" min="2007" max="2017" id="yearSlider" oninput="drawMap(this.value)" onchange="drawMap(this.value)">
         <svg id="yearmap" width="960", height="600"></svg>
       </div>
       <div class="section">
@@ -87,13 +87,15 @@
         return "gray";
       }
 
-      function drawMap() {
-        buildColorRange(2008);
+      function drawMap(yearStr) {
+        var year = parseInt(yearStr);
+        console.log("Drawing map for year " + year);
+        buildColorRange(year);
 
         mapSvg.selectAll("path")
           .data(topojson.feature(us, us.objects.states).features)
           .enter().append("path")
-            .attr("fill", function(d) { return getColor(d.id, 2008) })
+            .attr("fill", function(d) { return getColor(d.id, year) })
             .attr("d", path);
         mapSvg.append("path")
           .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
