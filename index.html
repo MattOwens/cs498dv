@@ -57,7 +57,7 @@
         for (var state in homicidesState) {
           var years = homicidesState[state];
           if(year in years) {
-            var count = years[year];
+            var count = parseInt(years[year]);
             if(count > maxCount) {
               maxCount = count;
             }
