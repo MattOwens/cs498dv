@@ -88,11 +88,14 @@
       }
 
       function getCumulativeCountForState(state, endYear) {
-        var total = 0;
+        var total = -1;
         for (checkYear = 2007; checkYear <= endYear; checkYear++) {
-          if(checkYear in homicidesState[state])
+          if(checkYear in homicidesState[state]) {
+            if(total == -1) total += 1; //first time to get to 0
             total += homicidesState[state][checkYear];
+          }
         }
+        return total;
       }
 
       function getColor(stateId, year, showCumulativeTotals) {
