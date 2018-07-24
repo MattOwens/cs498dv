@@ -58,8 +58,13 @@
           var years = homicidesState[state];
           if(year in years) {
             var count = years[year];
-            if(count > maxCount) maxCount = count;
-            if(count < minCount) minCount = count;
+            if(count > maxCount) {
+              maxCount = count;
+            }
+
+            if(count < minCount) {
+              minCount = count;
+            } 
           }
         }
 
