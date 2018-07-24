@@ -24,7 +24,7 @@
     <div id="fullpage">
       <div class="section">
         <p>Homicides By State</p>
-        <label><input name="showCumulativeCheckbox" type="checkbox" onchange="drawMap()"/>Show Cumulative Totals</label>
+        <label><input id="showCumulativeCheckbox" type="checkbox" onchange="drawMap()"/>Show Cumulative Totals</label>
         <input type="range" min="2007" max="2017" value="2007" id="yearSlider" oninput="drawMap()" onchange="drawMap()">
         <p id="yearLabel"></p>
         <svg id="yearmap" width="960", height="600"></svg>
