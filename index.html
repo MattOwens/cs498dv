@@ -24,6 +24,7 @@
     <div id="fullpage">
       <div class="section">
         <p>Homicides By State</p>
+        <input type="range" min="2007" max="2017" id="yearSlider">
         <svg id="yearmap" width="960", height="600"></svg>
       </div>
       <div class="section">
@@ -49,6 +50,8 @@
       var color = d3.scaleThreshold();
       var homicidesState = {};
       var statesMap = d3.map();
+      var path = d3.geoPath();
+      var mapSvg = d3.select("#yearmap");
 
       function buildColorRange(year) {
         var minCount = Number.MAX_SAFE_INTEGER;
@@ -73,52 +76,17 @@
           .range(d3.schemeBlues[5]);
       }
 
-
-      function buildMap() {
-
-        var path = d3.geoPath();
-        var mapSvg = d3.select("#yearmap");
-
-        d3.queue()
-        .defer(d3.json, "https://d3js.org/us-10m.v1.json")
-        .defer(d3.tsv, "https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv", function(d) { statesMap.set(d.code, d.id)})
-        .defer(d3.csv, "count_by_year_and_state.csv", buildHomicides)
-        .await(ready);
-
-        function buildHomicides(homicideData, error) {
-          /*var array = d3.nest()
-            .key(h => h.state)
-            .key(h => h.year)
-            .entries(homicideData)
-            .map(function(d) {
-              var state = statesMap.get(d.key);
-              var years = d.values.map(function(sy) {
-                  return {year: sy.key, count:sy.values[1].count}
-              });
-            });
-
-          array.forEach(function(d) {
-            homicidesState[d.state] = d.years;
-          });
-          */
-          var stateId = statesMap.get(homicideData.state);
-          if(!(stateId in homicidesState)) {
-            homicidesState[stateId] = {};
+      function getColor(stateId, year) {
+        var state = parseInt(stateId)
+        if (state in homicidesState) {
+          if(year in homicidesState[state]) {
+            return color(homicidesState[state][year]);
           }
-          homicidesState[stateId][homicideData.year] = homicideData.count; 
         }
+        return "gray";
+      }
 
-        function getColor(stateId, year) {
-          var state = parseInt(stateId)
-          if (state in homicidesState) {
-            if(year in homicidesState[state]) {
-              return color(homicidesState[state][year]);
-            }
-          }
-          return "gray";
-        }
-
-        function ready(error, us) {
+      function ready(error, us) {
           if(error) throw error;
 
           buildColorRange(2008);
@@ -132,6 +100,25 @@
             .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
             .attr("class", "state-borders")
             .attr("d", path);
+        }
+
+
+      function buildMap() {
+
+        var mapSvg = d3.select("#yearmap");
+
+        d3.queue()
+        .defer(d3.json, "https://d3js.org/us-10m.v1.json")
+        .defer(d3.tsv, "https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv", function(d) { statesMap.set(d.code, d.id)})
+        .defer(d3.csv, "count_by_year_and_state.csv", buildHomicides)
+        .await(ready);
+
+        function buildHomicides(homicideData, error) {
+          var stateId = statesMap.get(homicideData.state);
+          if(!(stateId in homicidesState)) {
+            homicidesState[stateId] = {};
+          }
+          homicidesState[stateId][homicideData.year] = homicideData.count; 
         }
       }
     </script>
