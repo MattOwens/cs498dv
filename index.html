@@ -31,7 +31,7 @@
       </div>
       <div class="section">
         <p>Section 2</p>
-        <svg id="circles" width="960", height="960"></svg>
+        <svg id="overviewCircles" width="960", height="960"></svg>
       </div>
       <div class="section">
         <p>Section 3</p>
@@ -52,12 +52,15 @@
       function loadData() {
         // this is run after page is ready so I can select all the svg elements I need
         mapSvg = d3.select("#yearmap");
+        overviewCircles = d3.select("#overviewCircles");
 
         d3.queue()
         .defer(d3.json, "https://d3js.org/us-10m.v1.json")
         .defer(d3.tsv, "https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv", function(d) { statesMap.set(d.code, d.id)})
         .defer(d3.csv, "count_by_year_and_state.csv", buildHomicides)
         .await(usLoaded);
+
+        drawOverViewCirlces();
 
       }
 
@@ -167,7 +170,50 @@
       }
 
 
+      //this chunk is the first set of circles (not broken down by type)
 
+      //harcoded data
+      var countsByCategory = {
+        arrest: 25674,
+        withoutArrest: 2922,
+        open: 23583 
+      };
+      var totalHomicides = countsByCategory.arrest + countsByCategory.withoutArrest + countsByCategory.open;
+
+      var overviewCirclesSvg = d3.select("#overviewCircles");
+
+      function drawOverViewCirlces() {
+        var svgHeight = $("#overviewCircles").height();
+        var svgWidth = $("#overviewCircles").width();
+
+        var getRadius = buildDataValueToAreaRadius(countsByCategory);
+
+        var join = overviewCirclesSvg.selectAll("circle").data(countsByCategory);
+        join.enter().append("circle").merge(join)
+          .attr("cy", svgHeight / 2)
+          .attr("r", getRadius)
+          .attr("cx", Math.random() * width / 2 + 1)
+          .exit().remove();
+      }
+
+      //based on https://bl.ocks.org/guilhermesimoes/e6356aa90a16163a6f917f53600a2b4a
+      function buildDataValueToAreaRadius(data, width) {
+        var maxValue = d3.max(data);
+        var totalCount = d3.sum(data);
+        var maxProp = maxValue / totalCount;
+        var maxRadius = width * 0.9 * maxProp;
+        var maxArea = Math.PI * Math.pow(maxRadius, 2);
+
+        var scale = d3.scaleLinear()
+          .domain([0, maxValue])
+          .range([0, maxArea]);
+
+        return function radius(d) {
+          var area;
+          area = scale(d);
+          return Math.sqrt(area / Math.PI);
+        }
+      }
 
 
     </script>
