@@ -190,9 +190,10 @@
 
         var join = overviewCirclesSvg.selectAll("circle").data(countsByCategory);
         join.enter().append("circle").merge(join)
+          .attr("cx", 20)
           .attr("cy", svgHeight / 2)
           .attr("r", getRadius)
-          .attr("cx", Math.random() * svgWidth / 2 + 1)
+          .attr("fill", "black")
           .exit().remove();
       }
 
