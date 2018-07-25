@@ -179,6 +179,11 @@
         open: 23583 
       };
       var totalHomicides = countsByCategory.arrest + countsByCategory.withoutArrest + countsByCategory.open;
+      var hardCodedColors = {
+        arrest: "green",
+        withoutArrest: "yellow",
+        open: "red"
+      };
 
       var overviewCirclesSvg = d3.select("#overviewCircles");
 
@@ -188,12 +193,12 @@
 
         var getRadius = buildDataValueToAreaRadius(countsByCategory, svgWidth);
 
-        var join = overviewCirclesSvg.selectAll("circle").data(d3.values(countsByCategory));
+        var join = overviewCirclesSvg.selectAll("circle").data(d3.entries(countsByCategory));
         join.enter().append("circle").merge(join)
           .attr("cx", 20)
           .attr("cy", svgHeight / 2)
-          .attr("r", function(d) { return getRadius(d) })
-          .attr("fill", "black")
+          .attr("r", function(d) { return getRadius(d.value) })
+          .attr("fill", function(d) { return hardCodedColors(d.key)})
           .exit().remove();
       }
 
