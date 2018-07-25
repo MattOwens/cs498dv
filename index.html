@@ -192,7 +192,7 @@
         join.enter().append("circle").merge(join)
           .attr("cx", 20)
           .attr("cy", svgHeight / 2)
-          .attr("r", getRadius)
+          .attr("r", function(d) { return getRadius(d) })
           .attr("fill", "black")
           .exit().remove();
       }
