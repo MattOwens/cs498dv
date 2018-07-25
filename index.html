@@ -198,8 +198,9 @@
 
       //based on https://bl.ocks.org/guilhermesimoes/e6356aa90a16163a6f917f53600a2b4a
       function buildDataValueToAreaRadius(data, width) {
-        var maxValue = d3.max(data);
-        var totalCount = d3.sum(data);
+        var values = d3.values(data);
+        var maxValue = d3.max(values);
+        var totalCount = d3.sum(values);
         var maxProp = maxValue / totalCount;
         var maxRadius = width * 0.9 * maxProp;
         var maxArea = Math.PI * Math.pow(maxRadius, 2);
