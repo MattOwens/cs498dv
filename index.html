@@ -198,7 +198,7 @@
           .attr("cx", 20)
           .attr("cy", svgHeight / 2)
           .attr("r", function(d) { return getRadius(d.value) })
-          .attr("fill", function(d) { return hardCodedColors(d.key)})
+          .attr("fill", function(d) { return hardCodedColors[d.key]})
           .exit().remove();
       }
 
