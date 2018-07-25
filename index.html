@@ -214,7 +214,7 @@
           .exit().remove();
 
         groups.append("text")
-          .attr("dx", function(d) { -5 * hardCodedLabels[d.key] })
+          .attr("dx", function(d) { -5 * hardCodedLabels[d.key].length })
           .text(function(d) { return hardCodedLabels[d.key] });
       }
 
