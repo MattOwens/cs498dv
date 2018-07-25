@@ -47,6 +47,7 @@
           licenseKey:"OPEN-SOURCE-GPLV3-LICENSE"
         });  
         loadData();
+        drawOverViewCirlces();
       });
 
       function loadData() {
@@ -60,7 +61,6 @@
         .defer(d3.csv, "count_by_year_and_state.csv", buildHomicides)
         .await(usLoaded);
 
-        drawOverViewCirlces();
 
       }
 
