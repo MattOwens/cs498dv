@@ -213,6 +213,7 @@
         return function radius(d) {
           var area;
           area = scale(d);
+          console.log(d + " " + area);
           return Math.sqrt(area / Math.PI);
         }
       }
