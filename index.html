@@ -186,8 +186,8 @@
       };
       var hardCodedXValues = {
         arrest: 220,
-        withoutArrest: 520,
-        open: 780
+        withoutArrest: 500,
+        open: 750
       };
 
       var overviewCirclesSvg = d3.select("#overviewCircles");
@@ -213,7 +213,7 @@
         var maxValue = d3.max(values);
         var totalCount = d3.sum(values);
         var maxProp = maxValue / totalCount;
-        var maxRadius = width * 0.45 * maxProp;
+        var maxRadius = width * 0.35 * maxProp;
         var maxArea = Math.PI * Math.pow(maxRadius, 2);
 
         var scale = d3.scaleLinear()
