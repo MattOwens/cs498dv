@@ -188,11 +188,11 @@
 
         var getRadius = buildDataValueToAreaRadius(countsByCategory, svgWidth);
 
-        var join = overviewCirclesSvg.selectAll("circle").data(countsByCategory);
+        var join = overviewCirclesSvg.selectAll("circle").data(d3.values(countsByCategory));
         join.enter().append("circle").merge(join)
           .attr("cx", 20)
           .attr("cy", svgHeight / 2)
-          .attr("r", function(key, value) { return getRadius(value) })
+          .attr("r", function(d) { return getRadius(d) })
           .attr("fill", "black")
           .exit().remove();
       }
