@@ -154,7 +154,8 @@
       }
       
       function buildHomicides(data) {
-        for(var homicideData in data) {
+        for(var index in data) {
+          var homicideData = data[index];
           var stateId = homicideData.state;
           if(!(stateId in homicidesState)) {
             homicidesState[stateId] = {};
