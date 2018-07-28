@@ -122,6 +122,10 @@
 
         var data = {};
         var maxCount = Number.MIN_SAFE_INTEGER;
+        var margin = 20;
+        var height = $("#yearsvg").height() - 2 * margin; //top and bottom margins
+        
+        var y = d3.scaleLinear().range([height, 0]).domain(([0, maxCount]));
 
         for(var state in homicidesState) {
           var count = getCountForState(state, year, showCumulativeTotals);
@@ -136,19 +140,17 @@
         var join = yearSvg.selectAll("rect").data(data);
         join.enter().append("rect").merge(join)
           .attr("width", barWidth)
-          .attr("height", function(d) { })
+          .attr("height", function(d) { y(d.value) })
           .attr("x", function(d, i) { return barWidth * i })
           .attr("y", 0)
           .exit().remove();
         
-        var margin = 20;
-        var height = $("#yearsvg").height() - 2 * margin; //top and bottom margins
+
 
         /*yearSvg.append("g")
           .attr("transform", "translate(0," + height + ")")
           .call(d3.axisBottom(Object.keys(data)));
         */
-        var y = d3.scaleLinear().range([height, 0]).domain(([0, maxCount]));
         yearSvg.append("g")
           .call(d3.axisLeft(y));
       }
