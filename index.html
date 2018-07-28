@@ -68,18 +68,17 @@
         yearSvg = d3.select("#yearsvg");
         overviewCirclesSvg = d3.select("#overviewCircles");
 
-        d3.queue()
+        /*d3.queue()
         .defer(d3.csv, "count_by_year_and_state.csv", buildHomicides)
         .await(usLoaded);
-
-
+          */
+        d3.csv("count_by_year_and_state.csv", buildHomicides);
+        drawMap();
       }
 
       //This chunk is the chart on the first slide
       var color = d3.scaleThreshold();
       var homicidesState = {};
-      //var statesMap = d3.map();
-      //var path = d3.geoPath();
       var yearSvg = d3.select("#yearsvg");
       var us = {};
 
@@ -162,11 +161,6 @@
           homicidesState[stateId][homicideData.year] = homicideData.count; 
         }
 
-      function usLoaded(error, usLoad) {
-        if(error) throw error;
-        us = usLoad;
-        drawMap();
-      }
 
 
       //this chunk is the first set of circles (not broken down by type)
