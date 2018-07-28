@@ -145,12 +145,13 @@
         var margin = 20;
         var height = $("#yearsvg").height() - 2 * margin; //top and bottom margins
 
-        yearSvg.append("g")
+        /*yearSvg.append("g")
           .attr("transform", "translate(0," + height + ")")
           .call(d3.axisBottom(Object.keys(data)));
-
+        */
+        var y = d3.scaleLinear().range([height, 0]).domain(([0, maxCount]));
         yearSvg.append("g")
-          .call(d3.axisLeft(Object.values(data)));
+          .call(d3.axisLeft(y));
       }
       
       function buildHomicides(data) {
