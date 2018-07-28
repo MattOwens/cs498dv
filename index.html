@@ -153,13 +153,15 @@
           .call(d3.axisLeft(data.values()));
       }
       
-      function buildHomicides(homicideData, error) {
+      function buildHomicides(data) {
+        for(var homicdeData in data) {
           var stateId = homicideData.state;
           if(!(stateId in homicidesState)) {
             homicidesState[stateId] = {};
           }
           homicidesState[stateId][homicideData.year] = homicideData.count; 
         }
+      }
 
 
 
