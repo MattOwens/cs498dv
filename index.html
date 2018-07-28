@@ -214,8 +214,12 @@
           .exit().remove();
 
         groups.append("text")
-          .attr("dx", function(d) { -5 * hardCodedLabels[d.key].length })
+          .attr("dx", getLabelDx)
           .text(function(d) { return hardCodedLabels[d.key] });
+      }
+
+      function getLabelDx(d) {
+        return -5 * hardCodesLabels[d.key].length;
       }
 
       //based on https://bl.ocks.org/guilhermesimoes/e6356aa90a16163a6f917f53600a2b4a
