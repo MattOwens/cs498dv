@@ -208,9 +208,6 @@
         var groups = overviewCirclesSvg.selectAll("g").data(d3.entries(countsByCategory));
         groups = groups.enter().append("g").merge(groups)
           .attr("transform", function(d) { return "translate("+ hardCodedXValues[d.key] + "," + svgHeight / 2 + ")" })
-        groups.append("circle")
-          .attr("r", function(d) { return getRadius(d.value) })
-          .attr("fill", function(d) { return hardCodedColors[d.key]})
           .on("mouseover", function(d) {
             tooltipDiv.transition()
               .duration(200)
@@ -225,6 +222,9 @@
                 .duration(200)
                 .style("opacity", 0);
           })
+        groups.append("circle")
+          .attr("r", function(d) { return getRadius(d.value) })
+          .attr("fill", function(d) { return hardCodedColors[d.key]})
           .exit().remove();
 
         groups.append("text")
