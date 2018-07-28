@@ -143,7 +143,7 @@
           .exit().remove();
         
         var margin = 20;
-        var height = yearSvg.height() - 2 * margin; //top and bottom margins
+        var height = $("#yearsvg").height() - 2 * margin; //top and bottom margins
 
         yearSvg.append("g")
           .attr("transform", "translate(0," + height + ")")
