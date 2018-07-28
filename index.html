@@ -72,8 +72,8 @@
         .defer(d3.csv, "count_by_year_and_state.csv", buildHomicides)
         .await(usLoaded);
           */
-        d3.csv("count_by_year_and_state.csv", buildHomicides);
-        drawMap();
+        d3.csv("count_by_year_and_state.csv", buildHomicides).defer(drawMap);
+        //drawMap();
       }
 
       //This chunk is the chart on the first slide
