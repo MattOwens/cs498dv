@@ -141,7 +141,6 @@
           $("#yearLabel").text("Year: " + year);
         }
 
-        console.log("Drawing map for year " + year +", cumulative: " + showCumulativeTotals);
         buildColorRange(year, showCumulativeTotals);
 
         var join = mapSvg.selectAll("path").data(topojson.feature(us, us.objects.states).features);
@@ -207,14 +206,11 @@
         groups = groups.enter().append("g").merge(groups)
           .attr("transform", function(d) { return "translate("+ hardCodedXValues[d.key] + "," + svgHeight / 2 + ")" })
         groups.append("circle")
-          //.attr("cx", function(d) { return hardCodedXValues[d.key]})
-          //.attr("cy", svgHeight / 2)
           .attr("r", function(d) { return getRadius(d.value) })
           .attr("fill", function(d) { return hardCodedColors[d.key]})
           .exit().remove();
 
         groups.append("text")
-          //.attr("dx", function(d) { return -4 * d.key.length })
           .attr("text-anchor", "middle")
           .text(function(d) { return hardCodedLabels[d.key] });
       }
@@ -235,7 +231,6 @@
         return function radius(d) {
           var area;
           area = scale(d);
-          console.log(d + " " + area);
           return Math.sqrt(area / Math.PI);
         }
       }
