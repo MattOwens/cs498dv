@@ -11,8 +11,7 @@
 
     <!-- load d3 -->
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-    <!--script src="https://d3js.org/topojson.v2.min.js"--><!--/script-->
+    <!--script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script-->
 
     <!--We will overide some default styles here -->
     <link rel="stylesheet" href='styles.css'>
@@ -27,7 +26,7 @@
         <label><input id="showCumulativeCheckbox" type="checkbox" onchange="drawMap()"/>Show Cumulative Totals</label>
         <input type="range" min="2007" max="2017" value="2007" id="yearSlider" oninput="drawMap()" onchange="drawMap()">
         <p id="yearLabel"></p>
-        <svg id="yearmap" width="960", height="600"></svg>
+        <svg id="yearsvg" width="960", height="600"></svg>
       </div>
       <div class="section">
         <p>Section 2</p>
@@ -66,55 +65,73 @@
 
       function loadData() {
         // this is run after page is ready so I can select all the svg elements I need
-        mapSvg = d3.select("#yearmap");
+        yearSvg = d3.select("#yearsvg");
         overviewCirclesSvg = d3.select("#overviewCircles");
 
         d3.queue()
-        .defer(d3.json, "https://d3js.org/us-10m.v1.json")
-        .defer(d3.tsv, "https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv", function(d) { statesMap.set(d.code, d.id)})
+        //.defer(d3.json, "https://d3js.org/us-10m.v1.json")
+        //.defer(d3.tsv, "https://gist.githubusercontent.com/mbostock/4090846/raw/07e73f3c2d21558489604a0bc434b3a5cf41a867/us-state-names.tsv", function(d) { statesMap.set(d.code, d.id)})
         .defer(d3.csv, "count_by_year_and_state.csv", buildHomicides)
         .await(usLoaded);
 
 
       }
 
-      //This chunk is the map on the first slide
+      //This chunk is the chart on the first slide
       var color = d3.scaleThreshold();
       var homicidesState = {};
-      var statesMap = d3.map();
-      var path = d3.geoPath();
-      var mapSvg = d3.select("#yearmap");
+      //var statesMap = d3.map();
+      //var path = d3.geoPath();
+      var yearSvg = d3.select("#yearsvg");
       var us = {};
 
-      function buildColorRange(year, showCumulativeTotals) {
-        var minCount = Number.MAX_SAFE_INTEGER;
-        var maxCount = Number.MIN_SAFE_INTEGER;
+      // function getMaxCount(year, showCumulativeTotals) {
+      //   var minCount = Number.MAX_SAFE_INTEGER;
+      //   var maxCount = Number.MIN_SAFE_INTEGER;
 
-        for (var state in homicidesState) {
+      //   for (var state in homicidesState) {
+      //     var years = homicidesState[state];
+
+      //     var count = -1;
+      //     if(showCumulativeTotals) {
+      //       count = getCumulativeCountForState(state, year);
+      //     }
+      //     else if(year in years) {
+      //       count = parseInt(years[year]);
+      //     }
+
+      //     if(count == -1) continue;
+
+      //     if(count > maxCount) {
+      //       maxCount = count;
+      //     }
+
+      //     if(count < minCount) {
+      //       minCount = count;
+      //     } 
+      //   }
+        
+      //   return maxCount;
+      //   /*color = d3.scaleThreshold()
+      //     .domain(d3.range(minCount, maxCount))
+      //     .range(d3.schemeBlues[5]);*/
+      // }
+
+      function getCountForState(state, year, showColumulativeTotals) {
+        var total = -1;
+
+        if(state in homicesState) {
           var years = homicidesState[state];
 
-          var count = -1;
           if(showCumulativeTotals) {
-            count = getCumulativeCountForState(state, year);
+            total = getCumulativeCountForState(state, year);
           }
           else if(year in years) {
-            count = parseInt(years[year]);
+            total = parseInt(years[year]);
           }
-
-          if(count == -1) continue;
-
-          if(count > maxCount) {
-            maxCount = count;
-          }
-
-          if(count < minCount) {
-            minCount = count;
-          } 
         }
 
-        color = d3.scaleThreshold()
-          .domain(d3.range(minCount, maxCount))
-          .range(d3.schemeBlues[5]);
+        return total;
       }
 
       function getCumulativeCountForState(state, endYear) {
@@ -128,26 +145,26 @@
         return total;
       }
 
-      function getColor(stateId, year, showCumulativeTotals) {
-        var state = parseInt(stateId)
-        if (state in homicidesState) {
+      // function getColor(stateId, year, showCumulativeTotals) {
+      //   var state = parseInt(stateId)
+      //   if (state in homicidesState) {
 
-          if(showCumulativeTotals) {
-            var total = getCumulativeCountForState(state, year);
-            if(total != 0)
-              return color(total);
-          }
-          else if(year in homicidesState[state]) {
-            return color(homicidesState[state][year]);
-          }
-        }
-        return "gray";
-      }
+      //     if(showCumulativeTotals) {
+      //       var total = getCumulativeCountForState(state, year);
+      //       if(total != 0)
+      //         return color(total);
+      //     }
+      //     else if(year in homicidesState[state]) {
+      //       return color(homicidesState[state][year]);
+      //     }
+      //   }
+      //   return "gray";
+      // }
 
       function drawMap() {
         var year = parseInt($("#yearSlider").val());
         var showCumulativeTotals = $("#showCumulativeCheckbox").is(":checked");
-
+        
         if(showCumulativeTotals) {
           $("#yearLabel").text("Years: 2007-" + year);
         }
@@ -155,21 +172,52 @@
           $("#yearLabel").text("Year: " + year);
         }
 
-        buildColorRange(year, showCumulativeTotals);
+        var data = {};
+        var maxCount = Number.MIN_SAFE_INTEGER;
 
-        var join = mapSvg.selectAll("path").data(topojson.feature(us, us.objects.states).features);
+        for(var state in homicidesState) {
+          var count = getCountForState(state, year, showCumulativeTotals);
+          if(count != -1)
+            data[state] = count;
+          if(count > maxCount)
+            maxCount = count;
+        }
+
+        //buildColorRange(year, showCumulativeTotals);
+        var barWidth = 30;
+        
+        var join = yearSvg.selectAll("rect").data(data);
+        join.enter().append("rect").merge(join)
+          .attr("width", barWidth)
+          .attr("height", function(d) { })
+          .attr("x", function(d, i) { return barWidth * i })
+          .attr("y", 0)
+          .exit().remove();
+        
+        var margin = 20;
+        var height = yearSvg.height() - 2 * margin; //top and bottom margins
+
+        yearSvg.append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(data.keys()));
+
+        yearSvg.append("g")
+          .call(d3.axisLeft(data.values()));
+
+        /*var join = yearSvg.selectAll("path").data(topojson.feature(us, us.objects.states).features);
         join.enter().append("path").merge(join)
           .attr("fill", function(d) { return getColor(d.id, year, showCumulativeTotals) })
           .attr("d", path);
 
-        mapSvg.append("path")
+        yearSvg.append("path")
           .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
           .attr("class", "state-borders")
           .attr("d", path);
+          */
       }
       
       function buildHomicides(homicideData, error) {
-          var stateId = statesMap.get(homicideData.state);
+          var stateId = homicideData.state;
           if(!(stateId in homicidesState)) {
             homicidesState[stateId] = {};
           }
