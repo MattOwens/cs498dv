@@ -147,10 +147,10 @@
 
         yearSvg.append("g")
           .attr("transform", "translate(0," + height + ")")
-          .call(d3.axisBottom(data.keys()));
+          .call(d3.axisBottom(Object.keys(data)));
 
         yearSvg.append("g")
-          .call(d3.axisLeft(data.values()));
+          .call(d3.axisLeft(Object.values(data)));
       }
       
       function buildHomicides(data) {
