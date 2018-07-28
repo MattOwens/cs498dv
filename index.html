@@ -31,6 +31,7 @@
       </div>
       <div class="section">
         <p>Section 2</p>
+        <div id="section2Tooltip" class="tooltip"></div>
         <svg id="overviewCircles" width="960", height="960"></svg>
       </div>
       <div class="section">
@@ -202,12 +203,27 @@
 
         var getRadius = buildDataValueToAreaRadius(countsByCategory, svgWidth);
 
+        var tooltipDiv = d3.select("#section2Tooltip");
+
         var groups = overviewCirclesSvg.selectAll("g").data(d3.entries(countsByCategory));
         groups = groups.enter().append("g").merge(groups)
           .attr("transform", function(d) { return "translate("+ hardCodedXValues[d.key] + "," + svgHeight / 2 + ")" })
         groups.append("circle")
           .attr("r", function(d) { return getRadius(d.value) })
           .attr("fill", function(d) { return hardCodedColors[d.key]})
+          .on("mouseover", function(d) {
+            tooltipDiv.transition()
+              .duration(200)
+              .style("opacity", 0.9);
+            tooltipDiv.html(hardCodedLabels[d.key] + "<br/>" + d.value)
+              .style("left", (d3.event.pageX) + "px")
+              .style("top", (d3.event.pageY - 28) + "px");
+          })
+          .on("mouseout", function(d) {
+              tooltipDiv.transition()
+                .duration(200)
+                .style("opacity", 0);
+          })
           .exit().remove();
 
         groups.append("text")
