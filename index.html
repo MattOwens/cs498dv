@@ -162,11 +162,16 @@
           .exit().remove();
 
 
+        // Remove old axes if necessary so there aren't duplicates drawn.
+        yearSvg.selectAll(".axis").remove();
+
         yearSvg.append("g")
           .attr("transform", "translate(0," + height + ")")
+          .attr("class", "axis")
           .call(d3.axisBottom(x));
         
         yearSvg.append("g")
+          .attr("class", "axis")
           .call(d3.axisLeft(y));
       }
       
