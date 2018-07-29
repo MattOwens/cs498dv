@@ -143,6 +143,7 @@
           .attr("height", function(d) { getHeight(d) })
           .attr("x", function(d, i) { return barWidth * i })
           .attr("y", 0)
+          .attr("fill", "blue")
           .exit().remove();
 
         function getHeight(d) {
