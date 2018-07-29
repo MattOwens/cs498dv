@@ -124,10 +124,10 @@
         var maxCount = Number.MIN_SAFE_INTEGER;
         var margin = 20;
         var height = $("#yearsvg").height() - 2 * margin; //top and bottom margins
+        var maxBarHeight = height - 15;
         
         var y = d3.scaleLinear()
-          .domain([0, maxCount])
-          .range([0, height]);
+          .domain([0, maxCount]);
           
 
         for(var state in homicidesState) {
@@ -143,7 +143,7 @@
         var join = yearSvg.selectAll("rect").data(d3.entries(data));
         join.enter().append("rect").merge(join)
           .attr("width", barWidth)
-          .attr("height", function(d) { return y(d.value) })
+          .attr("height", function(d) { return maxBarHeight * y(d.value) })
           .attr("x", function(d, i) { return barWidth * i })
           .attr("y", 0)
           .attr("fill", "blue")
