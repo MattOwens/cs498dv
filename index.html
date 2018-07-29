@@ -341,7 +341,21 @@
         var data = {}; 
         for(var state in dispositionByState) {
           if(state !== "undefined") {
-            data[state] = dispositionByState[state]
+            if(!showProportions) {
+              data[state] = dispositionByState[state]
+            }
+            else {
+              stateProp = {}
+              stateTotal = dispositionByState[state];
+              var total = 0;
+              for(var key in stateTotal) {
+                total += stateTotal[key];
+              }
+              for(var key in stateTotal) {
+                stateProp[key] = stateTotal[key] / total;
+              }
+              data[state] = stateProp;
+            }
           }
         }
 
