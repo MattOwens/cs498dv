@@ -144,8 +144,8 @@
         join.enter().append("rect").merge(join)
           .attr("width", barWidth)
           .attr("height", function(d) { return maxBarHeight * d.value / maxCount })
-          .attr("x", function(d, i) { return barWidth * i })
-          .attr("y", 0)
+          .attr("x", function(d, i) { return barWidth * i + 5})
+          .attr("y", height)
           .attr("fill", "blue")
           .exit().remove();
 
