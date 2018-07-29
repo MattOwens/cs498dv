@@ -66,20 +66,21 @@
           </svg>
         </div>
         <div class="section">
-          <p>Section 2</p>
-          <p>
-            The previous slide showed the total number of homicides in each state, but not all homicides are the same. In the dataset, each homicide
-            is tagged with one of the following attributes:
-          </p>
-          <ul>
-            <li>Closed by arrest: The police reported the case was closed and a suspect had been arrested.</li>
-            <li>Closed without arrest: The police reported there was sufficient evidence against a suspect, but an arrest was not possible.</li>
-            <li>Open/no arrest: All other cases.</li>
-          </ul>
-          <p>
-            This chart shows the relative numbers of each classification through the area of the circles. Mouse over a circle to see the number of 
-            homicides in each category. When you're finished, scroll down and we'll combine the information gained in these two slides.
-          </p>
+          <div id="section2text">
+              <h2>Section 2</h2>
+              <p>
+                The previous slide showed the total number of homicides in each state, but not all homicides are the same. In the dataset, each homicide
+                is tagged with one of the following attributes:
+                <ul>
+                  <li>Closed by arrest: The police reported the case was closed and a suspect had been arrested.</li>
+                  <li>Closed without arrest: The police reported there was sufficient evidence against a suspect, but an arrest was not possible.</li>
+                  <li>Open/no arrest: All other cases.</li>
+                </ul>
+                This chart shows the relative numbers of each classification through the area of the circles. Mouse over a circle to see the number of 
+                homicides in each category. When you're finished, scroll down and we'll combine the information gained in these two slides.
+              </p>
+          </div>
+
           <div id="section2Tooltip" class="tooltip"></div>
           <svg id="overviewCircles" width="960", height="960"></svg>
         </div>
