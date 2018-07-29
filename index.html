@@ -380,7 +380,7 @@
         x1.domain(keys).rangeRound([0, x0.bandwidth]);
         y.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { return d[key]; }) }) ]);
 
-        var join = canvas.selectAll("g").data(data);
+        var join = canvas.selectAll("g").data(d3.entries(data));
         join.enter().append("g").merge(join)
           .attr("transform", function(d) { return "translate(" + x0(d.state) + ",0)" })
           .selectAll("rect")
