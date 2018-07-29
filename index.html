@@ -80,13 +80,13 @@
             </div>
             <div id="aboutCollapse" class="collapse" aria-labelledby="aboutHeading">
               <div class="card-body" >
-                <h3>Visualization Structure</h3>
+                <h4>Visualization Structure</h4>
                 <p>
                   The visualization follows an interactive slideshow structure. There are three slides which show different perspectives of 
                   the data and the user is able to change parameters of the visualization to view the data how she wants.
                 </p>
 
-                <h3>Scenes</h3>
+                <h4>Scenes</h4>
                 <p>
                   There are three scenes in the visualization. Visual consistency is maintained by using the same color palette for each scene and the same style 
                   for axes and annotations.
@@ -100,7 +100,7 @@
                   the per-state total, which allows population-independent comparison between states.
                 </p>
 
-                <h3>Annotations</h3>
+                <h4>Annotations</h4>
                 <p>
                   There are 3 annotations in the visualization. On the first slide, when 2007 is selected, there is an annotation that points to Texas and Pennsylvania
                   as an example of why users need to consider each state's population when forming conclusions. On the third slide, there are two annotations. 
@@ -108,14 +108,14 @@
                   in the full dataset.
                 </p>
 
-                <h3>User Interface Events</h3>
+                <h4>User Interface Events</h4>
                 <p>
                   The user can navigate between slides either through links in the header at the top of the page or by scrolling. The header travels between slides
                   so it is always there as an indication to the user. The scrolling behavior is indicated by a set of dots on the right side of the page indicating
                   which page is currently visible. User interface events for the charts are discussed in the Triggers section.
                 </p>
 
-                <h3>Parameters</h3>
+                <h4>Parameters</h4>
                 <p>
                   The first and third charts use parameters to determine what to display. In the first chart, the year to display is passed to the drawing function
                   to determine which data to select. Additionally, there is a parameter that controls whether totals shown are for a single year or a running
@@ -123,13 +123,13 @@
                   per-outcome percentage of a state's total.
                 </p>
 
-                <h3>Triggers</h3>
+                <h4>Triggers</h4>
                 <p>
                   The triggers in this visualization are user interface controls. In the first visualization, the user drags a slider to select a year. In 
                   the first and third charts, checkboxes control how the data are displayed in the chart. When any of these controls are manipulated, the 
                   corresponding chart is updated.
                 </p>
-                <h3>Acknowledgements</h3>
+                <h4>Acknowledgements</h4>
                 <p>
                   This visualization relied on example code modified from the following sources.
                 </p>
@@ -215,6 +215,7 @@
           scrollBar: true,
           navigation: true,
           paddingTop: '80px',
+          verticalCentered: false,
           anchors: ['intro', 'chart1', 'chart2', 'chart3']
         });  
         loadData();
