@@ -28,67 +28,67 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.1/fullpage.min.css" />
   </head>
   <body>
+    <div id="mainWindow">
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li data-menuanchor="intro">
+              <a href="#intro">Introduction</a>
+            </li>
+            <li data-menuanchor="chart1">
+              <a href="#chart1">Chart 1</a>
+            </li>
+            <li data-menuanchor="chart2">
+              <a href="#chart2">Chart 2</a>
+            </li>
+            <li data-menuanchor="chart3">
+              <a href="#chart3">Chart 3</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
-          <li data-menuanchor="intro">
-            <a href="#intro">Introduction</a>
-          </li>
-          <li data-menuanchor="chart1">
-            <a href="#chart1">Chart 1</a>
-          </li>
-          <li data-menuanchor="chart2">
-            <a href="#chart2">Chart 2</a>
-          </li>
-          <li data-menuanchor="chart3">
-            <a href="#chart3">Chart 3</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <div id="fullpage">
-      <div class="section">
-        Introduction, about this visualization, etc go here.
-      </div>
-      <div class="section">      
-        <p>Homicides By State</p>
-        <label><input id="showCumulativeCheckbox" type="checkbox" onchange="drawMap()"/>Show Cumulative Totals</label>
-        <input type="range" min="2007" max="2017" value="2007" id="yearSlider" oninput="drawMap()" onchange="drawMap()">
-        <p id="yearLabel"></p>
-        <svg id="yearsvg" width="960", height="600">
-          <foreignobject x="720" y="100" width="100", height="100">
-            <div id="populationAnnotation" class="defaultannotation">
-              Remember to think about size of states when comparing bars. Texas had a population roughly twice that of Pennsylvania in 2007!
-            </div>
-          </foreignobject>
-        </svg>
-      </div>
-      <div class="section">
-        <p>Section 2</p>
-        <p>
-          The previous slide showed the total number of homicides in each state, but not all homicides are the same. In the dataset, each homicide
-          is tagged with one of the following attributes:
-        </p>
-        <ul>
-          <li>Closed by arrest: The police reported the case was closed and a suspect had been arrested.</li>
-          <li>Closed without arrest: The police reported there was sufficient evidence against a suspect, but an arrest was not possible.</li>
-          <li>Open/no arrest: All other cases.</li>
-        </ul>
-        <p>
-          This chart shows the relative numbers of each classification through the area of the circles. Mouse over a circle to see the number of 
-          homicides in each category. When you're finished, scroll down and we'll combine the information gained in these two slides.
-        </p>
-        <div id="section2Tooltip" class="tooltip"></div>
-        <svg id="overviewCircles" width="960", height="960"></svg>
-      </div>
-      <div class="section">
-        <p>Section 3</p>
-        <svg id="dispositionChart" width="960", height="600"></svg>
+      <div id="fullpage">
+        <div class="section">
+          Introduction, about this visualization, etc go here.
+        </div>
+        <div class="section">      
+          <p>Homicides By State</p>
+          <label><input id="showCumulativeCheckbox" type="checkbox" onchange="drawMap()"/>Show Cumulative Totals</label>
+          <input type="range" min="2007" max="2017" value="2007" id="yearSlider" oninput="drawMap()" onchange="drawMap()">
+          <p id="yearLabel"></p>
+          <svg id="yearsvg" width="960", height="600">
+            <foreignobject x="720" y="100" width="100", height="100">
+              <div id="populationAnnotation" class="defaultannotation">
+                Remember to think about size of states when comparing bars. Texas had a population roughly twice that of Pennsylvania in 2007!
+              </div>
+            </foreignobject>
+          </svg>
+        </div>
+        <div class="section">
+          <p>Section 2</p>
+          <p>
+            The previous slide showed the total number of homicides in each state, but not all homicides are the same. In the dataset, each homicide
+            is tagged with one of the following attributes:
+          </p>
+          <ul>
+            <li>Closed by arrest: The police reported the case was closed and a suspect had been arrested.</li>
+            <li>Closed without arrest: The police reported there was sufficient evidence against a suspect, but an arrest was not possible.</li>
+            <li>Open/no arrest: All other cases.</li>
+          </ul>
+          <p>
+            This chart shows the relative numbers of each classification through the area of the circles. Mouse over a circle to see the number of 
+            homicides in each category. When you're finished, scroll down and we'll combine the information gained in these two slides.
+          </p>
+          <div id="section2Tooltip" class="tooltip"></div>
+          <svg id="overviewCircles" width="960", height="960"></svg>
+        </div>
+        <div class="section">
+          <p>Section 3</p>
+          <svg id="dispositionChart" width="960", height="600"></svg>
+        </div>
       </div>
     </div>
-
     <!--Custom script -->
     <script type="text/javascript">
       $(document).ready(function(){

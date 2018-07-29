@@ -66,3 +66,8 @@ table {
 	border-radius: 8px;
 	pointer-events: none;
 }
+
+#mainWindow {
+	width: 75%;
+	margin: 0 auto;
+}
