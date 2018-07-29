@@ -118,9 +118,9 @@
 
         var data = {};
         var maxCount = Number.MIN_SAFE_INTEGER;
-        var margin = 20;
-        var height = $("#yearsvg").height() - 2 * margin; //top and bottom margins
-        var width = $("#yearsvg").width() - 2 * margin;
+        var marginTop = 10, marginBottom = 20, marginLeft = 40, marginRight = 10;
+        var height = $("#yearsvg").height() - marginTop - marginBottom;
+        var width = $("#yearsvg").width() - marginLeft - marginRight;
 
         for(var state in homicidesState) {
           var count = getCountForState(state, year, showCumulativeTotals);
@@ -132,7 +132,7 @@
 
         //Modified from https://bl.ocks.org/d3noob/bdf28027e0ce70bd132edc64f1dd7ea4
         yearSvg = yearSvg.append("g")
-          .attr("transform", "translate(" + margin + "," + margin + ")");
+          .attr("transform", "translate(" + marginLeft + "," + marginTop + ")");
 
         var x = d3.scaleBand()
           .domain(Object.keys(data))
