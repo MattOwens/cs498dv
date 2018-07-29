@@ -419,7 +419,7 @@
           var homicideData = data[index];
           var stateId = homicideData.state;
           if(!(stateId in dispositionByState)) {
-            dispositionByState[statId] = {}
+            dispositionByState[stateId] = {}
           }
 
           dispositionByState[stateId][homicideData.disposition] = homicideData.count;
