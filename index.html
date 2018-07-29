@@ -115,7 +115,7 @@
           </h1>
         </div>
         <p>Section 3</p>
-        <svg id="stateCircles" width="960", height="960"></svg>
+        <svg id="dispositionChart" width="960", height="960"></svg>
       </div>
     </div>
 
@@ -137,8 +137,10 @@
         // this is run after page is ready so I can select all the svg elements I need
         yearSvg = d3.select("#yearsvg");
         overviewCirclesSvg = d3.select("#overviewCircles");
+        dispositionSvg = d3.select("#dispositionChart");
 
         d3.csv("count_by_year_and_state.csv", buildHomicides);
+        d3.csv("count_by_state_disposition.csv", buildDisposition);
       }
 
       //This chunk is the chart on the first slide
@@ -337,6 +339,93 @@
           area = scale(d);
           return Math.sqrt(area / Math.PI);
         }
+      }
+
+      //this part is for the third chart
+      dispositionByState = {}
+      dispositionSvg = d3.select("#dispositionChart")
+
+      //modified from https://bl.ocks.org/mbostock/3887051
+      function drawDispositionChart() {
+        var maxCount = Number.MIN_SAFE_INTEGER;
+        var marginTop = 10, marginBottom = 20, marginLeft = 40, marginRight = 10;
+        var height = $("#dispositionChart").height() - marginTop - marginBottom;
+        var width = $("#dispositionChart").width() - marginLeft - marginRight;
+
+        var canvas = dispositionSvg.select("#chartWindow2");
+        if(canvas.empty()) {
+          canvas = dispositionSvg.append("g")
+            .attr("id", "chartWindow2")
+            .attr("transform", "translate(" + marginLeft + "," + marginTop + ")");
+        }
+
+        var includeArrest = true;
+        var data = dispositionByState;
+
+        var x0 = d3.scaleBand()
+          .rangeRound([0, width])
+          .paddingInner(0.1);
+
+        var x1 = d3.scaleBand()
+          .padding(0.05);
+
+        var y = d3.scaleLinear()
+          .rangeRound([height, 0]);
+
+        var color = d3.scaleOrdinal()
+          .range(['green','yellow','red']); //please change this before submission
+
+        x0.domain(Object.keys(data));
+        var keys = ["Arrest", "No Arrest", "Open"];
+        x1.domain(keys).rangeRound([0, x0.bandwidth]);
+        y.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { return d[key]; }) }) ]);
+
+        var join = canvas.selectAll("g").data(data);
+        join.enter().append("g").merge(join)
+          .attr("transform", function(d) { return "translate(" + x0(d.state) + ",0)" })
+          .selectAll("rect")
+          .data(function(d) { return keys.map(function(d) { return {key: key, value: d[key]}; }); })
+          .enter().append("rect")
+            .attr("x", function(d) { return x1(d.key); })
+            .attr("y", function(d) { return y(d.value); })
+            .attr("width", x1.bandwidth())
+            .attr("height", function(d) { return height - y(d.value); })
+            .attr("fill", function(d) { return color(d.key); });
+
+
+        //clear old axes if necessary
+        canvas.selectAll(".axis").remove();
+
+        canvas.append("g")
+          .attr("class", "axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x0));
+
+        canvas.append("g")
+          .attr("class", "axis")
+          .call(d3.axisLeft(y).ticks(null, "s"))
+        .append("text")
+          .attr("x", 2)
+          .attr("y", y(y.ticks().pop()) + 0.5)
+          .attr("dy", "0.32em")
+          .attr("fill", "#000")
+          .attr("font-weight", "bold")
+          .attr("text-anchor", "start")
+          .text("Homicides");
+      }
+
+      function buildDisposition(data) {
+        for(var index in data) {
+          var homicideData = data[index];
+          var stateId = homicideData.state;
+          if(!(stateId in dispositionByState)) {
+            dispositionByState[state] = {}
+          }
+
+          dispositionByState[state][homicideData.disposition] = homicideData.count;
+        }
+
+        drawDispositionChart();
       }
     </script>
   </body>
