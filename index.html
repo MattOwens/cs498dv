@@ -27,8 +27,7 @@
         <input type="range" min="2007" max="2017" value="2007" id="yearSlider" oninput="drawMap()" onchange="drawMap()">
         <p id="yearLabel"></p>
         <div id="populationAnnotation" class="defaultannotation">
-          Bars represent unadjusted totals. Texas has a larger bar than Pennsylvania,
-          but in 2007 Texas had a population roughly twice that of Pennsylvania.
+          Remember to think about size of states when comparing bars. Texas had a population roughly twice that of Pennsylvania in 2007!
         </div>
         <svg id="yearsvg" width="960", height="600"></svg>
       </div>
@@ -121,9 +120,9 @@
         }
 
         if(year == 2007) 
-          $("#populationAnnotation").css("visibility", "visible");
+          $("#populationAnnotation").show();
         else
-          $("#populationAnnotation").css("visibility", "none");
+          $("#populationAnnotation").hide();
 
         var data = {};
         var maxCount = Number.MIN_SAFE_INTEGER;
