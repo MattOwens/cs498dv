@@ -140,10 +140,16 @@
 
         var barWidth = 30;
 
+        d3.select("#yearsvg").append("g")
+          .attr("transform", "translate(" + margin + "," + maring + ")");
+
         var x = d3.scaleBand()
+          .domain(data.map(function(d) { return d.key }))
           .range([0, width])
           .padding(0.1);
+          
         var y = d3.scaleLinear()
+          .domain([0, maxCount])
           .range([maxBarHeight, 0]);
         
         var join = yearSvg.selectAll("rect").data(d3.entries(data));
