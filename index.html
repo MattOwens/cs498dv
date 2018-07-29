@@ -140,17 +140,11 @@
         var join = yearSvg.selectAll("rect").data(d3.entries(data));
         join.enter().append("rect").merge(join)
           .attr("width", barWidth)
-          .attr("height", function(d) { getHeight(d) })
+          .attr("height", function(d) { y(d.value) })
           .attr("x", function(d, i) { return barWidth * i })
           .attr("y", 0)
           .attr("fill", "blue")
           .exit().remove();
-
-        function getHeight(d) {
-          var height = y(d.value);
-          return height;
-        }
-        
 
 
         /*yearSvg.append("g")
