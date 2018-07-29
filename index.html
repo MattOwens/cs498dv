@@ -131,7 +131,7 @@
         }
 
         //Modified from https://bl.ocks.org/d3noob/bdf28027e0ce70bd132edc64f1dd7ea4
-        d3.select("#yearsvg").append("g")
+        yearSvg = yearSvg.append("g")
           .attr("transform", "translate(" + margin + "," + margin + ")");
 
         var x = d3.scaleBand()
