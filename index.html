@@ -379,7 +379,8 @@
         var keys = ["Arrest", "No Arrest", "Open"];
         var maxCount = Number.MIN_SAFE_INTEGER;
         for(var homicideData in data) {
-          for(var key in keys) {
+          for(var idx in keys) {
+            var key = keys[idx];
             var count = homicideData[key];
             if(count > maxCount) maxCount = count;
           }
