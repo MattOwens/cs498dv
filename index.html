@@ -89,6 +89,7 @@
         </div>
         <div class="section">
           <p>Section 3</p>
+          <label><input id="showProportions" type="checkbox" onchange="drawDispositionChart()"/>Show Category Proportion of Total</label>
           <svg id="dispositionChart" width="960", height="600"></svg>
         </div>
       </div>
@@ -335,7 +336,8 @@
             .attr("transform", "translate(" + marginLeft + "," + marginTop + ")");
         }
 
-        var includeArrest = true;
+        var showProportions = $("#showProportions").is(":checked");
+
         var data = dispositionByState;
 
         var x0 = d3.scaleBand()
