@@ -390,7 +390,8 @@
             .attr("y", function(d) { return y(d.value); })
             .attr("width", x1.bandwidth())
             .attr("height", function(d) { return height - y(d.value); })
-            .attr("fill", function(d) { return color(d.key); });
+            .attr("fill", function(d) { return color(d.key); })
+          .exit().remove();
 
 
         //clear old axes if necessary
@@ -403,15 +404,15 @@
 
         canvas.append("g")
           .attr("class", "axis")
-          .call(d3.axisLeft(y).ticks(null, "s"))
-        .append("text")
-          .attr("x", 2)
-          .attr("y", y(y.ticks().pop()) + 0.5)
-          .attr("dy", "0.32em")
-          .attr("fill", "#000")
-          .attr("font-weight", "bold")
-          .attr("text-anchor", "start")
-          .text("Homicides");
+          .call(d3.axisLeft(y));
+        // .append("text")
+        //   .attr("x", 2)
+        //   .attr("y", y(y.ticks().pop()) + 0.5)
+        //   .attr("dy", "0.32em")
+        //   .attr("fill", "#000")
+        //   .attr("font-weight", "bold")
+        //   .attr("text-anchor", "start")
+        //   .text("Homicides");
       }
 
       function buildDisposition(data) {
