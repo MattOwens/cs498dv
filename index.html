@@ -377,7 +377,7 @@
 
         x0.domain(Object.keys(data));
         var keys = ["Arrest", "No Arrest", "Open"];
-        x1.domain(keys).rangeRound([0, x0.bandwidth]);
+        x1.domain(keys).rangeRound([0, x0.bandwidth()]);
         y.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { return d[key]; }) }) ]);
 
         var join = canvas.selectAll("g").data(d3.entries(data));
