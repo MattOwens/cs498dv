@@ -377,8 +377,15 @@
 
         x0.domain(Object.keys(data));
         var keys = ["Arrest", "No Arrest", "Open"];
+        var maxCount = Number.MIN_SAFE_INTEGER;
+        for(var homicideData in data) {
+          for(var key in keys) {
+            var count = homicideData[key];
+            if(count > maxCount) maxCount = count;
+          }
+        }
         x1.domain(keys).rangeRound([0, x0.bandwidth()]);
-        y.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { return d[key]; }) }) ]);
+        y.domain([0, maxCount]);
 
         var join = canvas.selectAll("g").data(d3.entries(data));
         join.enter().append("g").merge(join)
