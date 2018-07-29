@@ -26,6 +26,10 @@
         <label><input id="showCumulativeCheckbox" type="checkbox" onchange="drawMap()"/>Show Cumulative Totals</label>
         <input type="range" min="2007" max="2017" value="2007" id="yearSlider" oninput="drawMap()" onchange="drawMap()">
         <p id="yearLabel"></p>
+        <div id="populationAnnotation" class="defaultannotation">
+          Bars represent unadjusted totals. Texas has a larger bar than Pennsylvania,
+          but in 2007 Texas had a population roughly twice that of Pennsylvania.
+        </div>
         <svg id="yearsvg" width="960", height="600"></svg>
       </div>
       <div class="section">
@@ -115,6 +119,8 @@
         else {
           $("#yearLabel").text("Year: " + year);
         }
+
+        $("#populationAnnotation").visible = year == 2007;
 
         var data = {};
         var maxCount = Number.MIN_SAFE_INTEGER;
