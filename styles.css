@@ -58,7 +58,7 @@ table {
 #populationAnnotation {
 	text-align: center;
 	width: 100px;
-	height: 100px;
+	height: 110px;
 	padding: 2px;
 	font: 10px sans-serif;
 	background: lightsteelblue;
@@ -69,6 +69,11 @@ table {
 
 #mainWindow {
 	width: 75%;
+	margin: 0 auto;
+}
+
+#yearSlider {
+	width: 960;
 	margin: 0 auto;
 }
 
