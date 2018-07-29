@@ -120,7 +120,10 @@
           $("#yearLabel").text("Year: " + year);
         }
 
-        $("#populationAnnotation").visible = year == 2007;
+        if(year == 2007) 
+          $("#populationAnnotation").css("visibility", "visible");
+        else
+          $("#populationAnnotation").css("visibility", "none");
 
         var data = {};
         var maxCount = Number.MIN_SAFE_INTEGER;
