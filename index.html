@@ -393,7 +393,10 @@
           .attr("class", "axis")
           .call(d3.axisLeft(y));
 
+        canvas.selectAll(".legend").remove();
+
         var legend = canvas.append("g")
+          .attr("class", "legend")
           .attr("font-family", "sans_serif")
           .attr("font-size", 10)
           .attr("text-anchor", "end")
