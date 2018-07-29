@@ -55,7 +55,6 @@
         <div class="section">     
           <div class="section1text">
             <h2>Homicides By State</h2>
-            <br />
             <p>
               We start by looking at the number of homicides in each state for the years collected in the dataset. You can either view bars as 
               a count for a given year, or running total from 2007 to the selected year. Notice the data is collected over 10 years and the scale showing
@@ -82,31 +81,27 @@
               <p>
                 The previous slide showed the total number of homicides in each state, but not all homicides are the same. The dataset specifies the outcome of
                 each homicide investigation. The possible outcomes are:
-                <br/>
                 <ul>
                   <li>Closed by arrest: The police reported the case was closed and a suspect had been arrested.</li>
                   <li>Closed without arrest: The police reported there was sufficient evidence against a suspect, but an arrest was not possible.</li>
                   <li>Open/no arrest: All other cases.</li>
                 </ul>
-                <br/>
                 This chart shows the relative numbers of each classification through the area of the circles. Mouse over a circle to see the number of 
                 homicides in each category. When you're finished, scroll down and we'll combine the information gained in these two slides.
               </p>
           </div>
-
-          <div id="section2Tooltip" class="tooltip"></div>
           <svg id="overviewCircles" width="960", height="960"></svg>
+          <div id="section2Tooltip" class="tooltip"></div>
         </div>
         <div class="section">
           <div id="section3text">
+            <h2>Outcomes By State</h2>
             <p>
               On this slide, we can look at how well each state has performed in closing homicide cases. In the default display, we're still looking at totals 
               per state, so we need to consider population when making comparisons. If you check "Show Category Percentage of Total" the chart shows what percentage 
               each outcome makes up of the state's total. With this we can compare results across states.
             </p>
-            <br />
-          </div>>
-          <h2>Outcomes By State</h2>
+          </div>
 
           <label><input id="showProportions" type="checkbox" onchange="drawDispositionChart()"/>Show Category Percentage of Total</label>
           <svg id="dispositionChart" width="960", height="600">
