@@ -12,3 +12,10 @@ year_state.to_csv('count_by_year_and_state.csv')
 
 year_state_disposition = homicide_data.groupby(['year','state','disposition']).count()['uid']
 year_state_disposition.to_csv('count_by_year_state_and_disposition.csv')
+
+# totals by category
+totals_by_category = homicide_data.groupby(['disposition']).count()['uid']
+print(totals_by_category)
+
+state_disposition = homicide_data.groupby(['state', 'disposition']).count()['uid']
+state_disposition.to_csv('count_by_state_disposition.csv')
