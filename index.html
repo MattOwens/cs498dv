@@ -53,7 +53,7 @@
           Introduction, about this visualization, etc go here.
         </div>
         <div class="section">     
-          <div class="section1text" class="text-center">
+          <div class="section1text">
             <h2>Homicides By State</h2>
             <br />
             <p>
@@ -77,7 +77,7 @@
         </div>
 
         <div class="section">
-          <div id="section2text" class="text-center">
+          <div id="section2text">
               <h2>Closing The Case</h2>
               <p>
                 The previous slide showed the total number of homicides in each state, but not all homicides are the same. The dataset specifies the outcome of
@@ -98,7 +98,7 @@
           <svg id="overviewCircles" width="960", height="960"></svg>
         </div>
         <div class="section">
-          <div id="section3text" class="text-center">
+          <div id="section3text">
             <p>
               On this slide, we can look at how well each state has performed in closing homicide cases. In the default display, we're still looking at totals 
               per state, so we need to consider population when making comparisons. If you check "Show Category Percentage of Total" the chart shows what percentage 
@@ -270,9 +270,9 @@
       };
       var totalHomicides = countsByCategory.arrest + countsByCategory.withoutArrest + countsByCategory.open;
       var hardCodedColors = {
-        arrest: "green",
-        withoutArrest: "yellow",
-        open: "red"
+        arrest: "#80e5ff",
+        withoutArrest: "#00ccff",
+        open: "#005266"
       };
       var hardCodedXValues = {
         arrest: 220,
@@ -405,7 +405,7 @@
           .rangeRound([height, 0]);
 
         var color = d3.scaleOrdinal()
-          .range(['green','yellow','red']);
+          .range(['#80e5ff','#00ccff','#005266']);
 
         x0.domain(Object.keys(data));
         var keys = ["Arrest", "No Arrest", "Open"];
