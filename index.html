@@ -68,10 +68,6 @@
         yearSvg = d3.select("#yearsvg");
         overviewCirclesSvg = d3.select("#overviewCircles");
 
-        /*d3.queue()
-        .defer(d3.csv, "count_by_year_and_state.csv", buildHomicides)
-        .await(usLoaded);
-          */
         d3.csv("count_by_year_and_state.csv", buildHomicides);
       }
 
@@ -125,10 +121,6 @@
         var margin = 20;
         var height = $("#yearsvg").height() - 2 * margin; //top and bottom margins
         var width = $("#yearsvg").width() - 2 * margin;
-        //var maxBarHeight = height - 15;
-        
-
-          
 
         for(var state in homicidesState) {
           var count = getCountForState(state, year, showCumulativeTotals);
@@ -139,9 +131,6 @@
         }
 
         //Modified from https://bl.ocks.org/d3noob/bdf28027e0ce70bd132edc64f1dd7ea4
-
-        //var barWidth = 30;
-
         d3.select("#yearsvg").append("g")
           .attr("transform", "translate(" + margin + "," + margin + ")");
 
@@ -160,9 +149,8 @@
           .attr("height", function(d) { return height - y(d.value) })
           .attr("x", function(d) { return x(d.key) })
           .attr("y", function(d) { return y(d.value) })
-          .attr("fill", "blue")
+          .attr("class", "bar")
           .exit().remove();
-
 
         // Remove old axes if necessary so there aren't duplicates drawn.
         yearSvg.selectAll(".axis").remove();

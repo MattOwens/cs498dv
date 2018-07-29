@@ -47,11 +47,10 @@ table {
 	border-spacing: 0;
 }
 
-.state-borders {
-	fill: none;
-	stroke: #000;
-	stroke-width: 0.5px;
-	stroke-linejoin: round;
-	stroke-linecap: round;
-	pointer-events: none;
-  }
+.bar {
+	fill: steelblue;
+	opacity: 50%;
+	border-style: solid;
+	border-width: 2px;
+	border-color: darkblue; 
+}
