@@ -53,7 +53,7 @@
           Introduction, about this visualization, etc go here.
         </div>
         <div class="section">      
-          <p>Homicides By State</p>
+          <h2>Homicides By State</h2>
           <label><input id="showCumulativeCheckbox" type="checkbox" onchange="drawMap()"/>Show Cumulative Totals</label>
           <input type="range" min="2007" max="2017" value="2007" id="yearSlider" oninput="drawMap()" onchange="drawMap()">
           <p id="yearLabel"></p>
@@ -88,7 +88,7 @@
           <svg id="overviewCircles" width="960", height="960"></svg>
         </div>
         <div class="section">
-          <p>Section 3</p>
+          <h2>Outcomes By State</h2>
           <label><input id="showProportions" type="checkbox" onchange="drawDispositionChart()"/>Show Category Proportion of Total</label>
           <svg id="dispositionChart" width="960", height="600"></svg>
         </div>
@@ -338,7 +338,12 @@
 
         var showProportions = $("#showProportions").is(":checked");
 
-        var data = dispositionByState;
+        var data = {}; 
+        for(var state in dispositionByState) {
+          if(state !== "undefined") {
+            data[state] = dispositionByState[state]
+          }
+        }
 
         var x0 = d3.scaleBand()
           .rangeRound([0, width])
@@ -356,6 +361,7 @@
         x0.domain(Object.keys(data));
         var keys = ["Arrest", "No Arrest", "Open"];
         var maxCount = Number.MIN_SAFE_INTEGER;
+
         for(var state in data) {
           var homicideData = data[state];
           for(var idx in keys) {
