@@ -391,7 +391,7 @@
 
         var join = canvas.selectAll("g").data(d3.entries(data));
         join.enter().append("g").merge(join)
-          .attr("transform", function(d) { return "translate(" + x0(d.state) + ",0)" })
+          .attr("transform", function(d) { return "translate(" + x0(d.key) + ",0)" })
           .selectAll("rect")
           .data(function(d) { return keys.map(function(key) { return {key: key, value: d.value[key]}; }); })
           .enter().append("rect")
