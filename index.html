@@ -378,7 +378,8 @@
         x0.domain(Object.keys(data));
         var keys = ["Arrest", "No Arrest", "Open"];
         var maxCount = Number.MIN_SAFE_INTEGER;
-        for(var homicideData in data) {
+        for(var state in data) {
+          var homicideData = data[state];
           for(var idx in keys) {
             var key = keys[idx];
             var count = homicideData[key];
@@ -424,7 +425,7 @@
       }
 
 
-      
+
 
       function buildDisposition(data) {
         for(var index in data) {
