@@ -159,7 +159,7 @@
           .attr("width", x.bandwidth())
           .attr("height", function(d) { return height - y(d.value) })
           .attr("x", function(d) { return x(d.key) })
-          .attr("y", function(d) { return d.key })
+          .attr("y", function(d) { return y(d.value) })
           .attr("fill", "blue")
           .exit().remove();
 
