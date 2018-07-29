@@ -115,7 +115,7 @@
           </h1>
         </div>
         <p>Section 3</p>
-        <svg id="dispositionChart" width="960", height="960"></svg>
+        <svg id="dispositionChart" width="960", height="600"></svg>
       </div>
     </div>
 
@@ -414,19 +414,8 @@
         canvas.append("g")
           .attr("class", "axis")
           .call(d3.axisLeft(y));
-        // .append("text")
-        //   .attr("x", 2)
-        //   .attr("y", y(y.ticks().pop()) + 0.5)
-        //   .attr("dy", "0.32em")
-        //   .attr("fill", "#000")
-        //   .attr("font-weight", "bold")
-        //   .attr("text-anchor", "start")
-        //   .text("Homicides");
       }
-
-
-
-
+      
       function buildDisposition(data) {
         for(var index in data) {
           var homicideData = data[index];
