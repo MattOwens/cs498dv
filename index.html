@@ -96,7 +96,7 @@
           </p>
           <label><input id="showProportions" type="checkbox" onchange="drawDispositionChart()"/>Show Category Percentage of Total</label>
           <svg id="dispositionChart" width="960", height="600">
-            <foreignobject x="150" y="10" width="100", height="100">
+            <foreignobject x="265" y="10" width="100", height="100">
               <div id="illinoisAnnotation" class="defaultannotation">
                 
               </div>
@@ -354,7 +354,7 @@
           $("#illinoisAnnotation").text("Oops - it looks like Illinois has the highest count of open cases!");
         }
         else {
-          $("#illinoisAnnotation").text("Unfortunately, percentages don't help here - Illinois still has the highest percentage open");
+          $("#illinoisAnnotation").text("Unfortunately, percentages don't help us - Illinois still has the highest percentage open cases.");
         }
 
         var data = {}; 
