@@ -431,7 +431,7 @@
             dispositionByState[stateId] = {}
           }
 
-          dispositionByState[stateId][homicideData.disposition] = homicideData.count;
+          dispositionByState[stateId][homicideData.disposition] = +homicideData.count;
         }
 
         drawDispositionChart();
