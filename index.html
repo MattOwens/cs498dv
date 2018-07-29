@@ -144,7 +144,7 @@
           .attr("transform", "translate(" + margin + "," + margin + ")");
 
         var x = d3.scaleBand()
-          .domain(data.map(function(d) { return d.key }))
+          .domain(Object.keys(data))
           .range([0, width])
           .padding(0.1);
 
