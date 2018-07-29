@@ -125,7 +125,7 @@
         var margin = 20;
         var height = $("#yearsvg").height() - 2 * margin; //top and bottom margins
         var width = $("#yearsvg").width() - 2 * margin;
-        var maxBarHeight = height - 15;
+        //var maxBarHeight = height - 15;
         
 
           
@@ -138,7 +138,9 @@
             maxCount = count;
         }
 
-        var barWidth = 30;
+        //Modified from https://bl.ocks.org/d3noob/bdf28027e0ce70bd132edc64f1dd7ea4
+
+        //var barWidth = 30;
 
         d3.select("#yearsvg").append("g")
           .attr("transform", "translate(" + margin + "," + margin + ")");
@@ -150,14 +152,14 @@
 
         var y = d3.scaleLinear()
           .domain([0, maxCount])
-          .range([maxBarHeight, 0]);
+          .range([height, 0]);
         
         var join = yearSvg.selectAll("rect").data(d3.entries(data));
         join.enter().append("rect").merge(join)
           .attr("width", x.bandwidth())
-          .attr("height", function(d) { return maxBarHeight - y(d.value) })
+          .attr("height", function(d) { return height - y(d.value) })
           .attr("x", function(d) { return x(d.key) })
-          .attr("y", height)
+          .attr("y", function(d) { return d.key })
           .attr("fill", "blue")
           .exit().remove();
 
