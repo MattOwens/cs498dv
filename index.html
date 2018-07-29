@@ -131,8 +131,12 @@
         }
 
         //Modified from https://bl.ocks.org/d3noob/bdf28027e0ce70bd132edc64f1dd7ea4
-        yearSvg = yearSvg.append("g")
-          .attr("transform", "translate(" + marginLeft + "," + marginTop + ")");
+        var canvas = yearSvg.select("#chartWindow");
+        if(canvas.empty()) {
+          canvas = yearSvg.append("g")
+            .attr("id", "chartWindow")
+            .attr("transform", "translate(" + marginLeft + "," + marginTop + ")");
+        }
 
         var x = d3.scaleBand()
           .domain(Object.keys(data))
@@ -143,7 +147,7 @@
           .domain([0, maxCount])
           .range([height, 0]);
         
-        var join = yearSvg.selectAll("rect").data(d3.entries(data));
+        var join = canvas.selectAll("rect").data(d3.entries(data));
         join.enter().append("rect").merge(join)
           .attr("width", x.bandwidth())
           .attr("height", function(d) { return height - y(d.value) })
@@ -153,14 +157,14 @@
           .exit().remove();
 
         // Remove old axes if necessary so there aren't duplicates drawn.
-        yearSvg.selectAll(".axis").remove();
+        canvas.selectAll(".axis").remove();
 
-        yearSvg.append("g")
+        canvas.append("g")
           .attr("transform", "translate(0," + height + ")")
           .attr("class", "axis")
           .call(d3.axisBottom(x));
         
-        yearSvg.append("g")
+        canvas.append("g")
           .attr("class", "axis")
           .call(d3.axisLeft(y));
       }
